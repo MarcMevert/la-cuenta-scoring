@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -13,7 +14,18 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+
+  <!-- ════════════════ THEME SELECTOR ════════════════ -->
+  <div class="theme-selector" id="theme-selector">
+    <div class="theme-btn active" data-theme="default" style="background: #c8860a;" title="Default"></div>
+    <div class="theme-btn" data-theme="green" style="background: #7fb347;" title="Green"></div>
+    <div class="theme-btn" data-theme="orange" style="background: #f0a31d;" title="Orange"></div>
+    <div class="theme-btn" data-theme="blue" style="background: #6fa1d2;" title="Blue"></div>
+    <div class="theme-btn" data-theme="turquoise" style="background: #00827b;" title="Turquoise"></div>
+    <div class="theme-btn" data-theme="fire" style="background: #d93616;" title="Fire"></div>
+  </div>
 
   <!-- ════════════════ SETUP SCREEN ════════════════ -->
   <section id="screen-setup" class="screen">
@@ -84,15 +96,17 @@
 
     <!-- Action buttons -->
     <div class="btn-row">
-      <button id="undo-btn"       class="btn-secondary">↩ Undo</button>
-      <button id="submit-round"   class="btn-primary" style="flex:2">Submit Round</button>
+      <button id="undo-btn" class="btn-secondary">↩ Undo</button>
+      <button id="submit-round" class="btn-primary" style="flex:2">Submit Round</button>
     </div>
 
     <!-- History -->
     <details>
       <summary>Round History</summary>
       <table class="history-table" id="history-table">
-        <thead><tr id="history-head"></tr></thead>
+        <thead>
+          <tr id="history-head"></tr>
+        </thead>
         <tbody id="history-body"></tbody>
       </table>
     </details>
@@ -105,4 +119,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>

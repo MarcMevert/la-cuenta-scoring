@@ -277,6 +277,28 @@ function renderHistory() {
   }).join('');
 }
 
+/* ── theme management ─────────────────────────────────────── */
+function initTheme() {
+  const savedTheme = localStorage.getItem('lacuenta-theme') || 'default';
+  applyTheme(savedTheme);
+
+  const btns = document.querySelectorAll('.theme-btn');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.theme;
+      applyTheme(t);
+      localStorage.setItem('lacuenta-theme', t);
+    });
+  });
+}
+
+function applyTheme(themeName) {
+  document.documentElement.setAttribute('data-theme', themeName);
+  document.querySelectorAll('.theme-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.theme === themeName);
+  });
+}
+
 /* ── new game button ──────────────────────────────────────── */
 function newGame() {
   localStorage.removeItem('lacuenta');
@@ -292,6 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   loadState();
+  initTheme();
 
   initSetup();
 

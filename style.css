@@ -16,6 +16,28 @@
   --shadow:      0 4px 20px rgba(0,0,0,.55);
 }
 
+/* data-theme overrides */
+[data-theme="green"] {
+  --accent:      #7fb347;
+  --accent-lite: #9fd367;
+}
+[data-theme="orange"] {
+  --accent:      #f0a31d;
+  --accent-lite: #ffc33d;
+}
+[data-theme="blue"] {
+  --accent:      #6fa1d2;
+  --accent-lite: #8fc1f2;
+}
+[data-theme="turquoise"] {
+  --accent:      #00827b;
+  --accent-lite: #20a29b;
+}
+[data-theme="fire"] {
+  --accent:      #d93616;
+  --accent-lite: #f95636;
+}
+
 html, body {
   height: 100%;
   font-family: 'Georgia', 'Times New Roman', serif;
@@ -287,6 +309,32 @@ body {
   line-height: 1.6;
 }
 .winner-msg span { font-size: .95rem; color: var(--text-muted); }
+
+/* ── theme selector ───────────────────────────────────────── */
+.theme-selector {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  z-index: 100;
+}
+.theme-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid var(--surface2);
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.theme-btn:hover {
+  transform: scale(1.15);
+  border-color: var(--text);
+}
+.theme-btn.active {
+  border-color: var(--text);
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+}
 
 /* ── history toggle ───────────────────────────────────────── */
 details { width: 100%; }
