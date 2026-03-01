@@ -2,6 +2,8 @@
 
 A mobile-friendly score tracker for the **La Cuenta** (*The Bill*) card game by [2 Tomatoes Games](https://2tomatoesgames.com).
 
+> **Note:** This is a scoring app only. You need the original physical card game to play — this app does not replace it.
+
 ---
 
 ## About the Game
@@ -19,7 +21,7 @@ A mobile-friendly score tracker for the **La Cuenta** (*The Bill*) card game by 
 
 Each round, enter the bill amount each active player must pay. Any player whose savings drop below zero is **eliminated**. Play continues until only one player remains — that player is the winner!
 
-> 📄 Official rulebook: [2 Tomatoes Games – La Cuenta rules (PDF)](https://2tomatoesgames.com/de/index.php?controller=attachment&id_attachment=5)
+> 🎲 Find the game on BoardGameGeek: [La Cuenta (BGG)](https://boardgamegeek.com/boardgame/437581/la-cuenta)
 
 ---
 
