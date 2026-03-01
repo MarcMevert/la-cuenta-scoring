@@ -1,0 +1,341 @@
+/* ── reset / base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #2b1a0e;
+  --surface:     #3e2510;
+  --surface2:    #5a3518;
+  --accent:      #c8860a;
+  --accent-lite: #e8a83a;
+  --gold:        #f0c040;
+  --text:        #f5e6c8;
+  --text-muted:  #b89060;
+  --red:         #c0392b;
+  --green:       #27ae60;
+  --radius:      12px;
+  --shadow:      0 4px 20px rgba(0,0,0,.55);
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── screens ──────────────────────────────────────────────── */
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
+  padding: 1.5rem 1rem 5rem;
+  gap: 1.25rem;
+}
+.screen.active { display: flex; }
+
+/* ── header ───────────────────────────────────────────────── */
+.app-header {
+  text-align: center;
+  width: 100%;
+  padding: 1.25rem 0 0.5rem;
+}
+.app-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 2px 6px rgba(0,0,0,.6);
+  letter-spacing: .04em;
+}
+.app-subtitle {
+  font-size: .9rem;
+  color: var(--text-muted);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ornamental divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  width: 100%;
+  color: var(--text-muted);
+  font-size: .85rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+/* ── section card ─────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--surface2);
+  border-radius: var(--radius);
+  padding: 1.25rem 1rem;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-size: 1rem;
+  color: var(--accent-lite);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .9rem;
+  text-align: center;
+}
+
+/* ── player count buttons ─────────────────────────────────── */
+.count-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .6rem;
+}
+
+.count-btn {
+  background: var(--surface2);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1.05rem;
+  padding: .75rem 0;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .1s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .25rem;
+}
+.count-btn .btn-count  { font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+.count-btn .btn-saving { font-size: .72rem; color: var(--text-muted); }
+.count-btn:hover       { background: var(--accent); border-color: var(--gold); }
+.count-btn.selected    { background: var(--accent); border-color: var(--gold); transform: scale(1.04); }
+
+/* ── name inputs ──────────────────────────────────────────── */
+#name-inputs { display: flex; flex-direction: column; gap: .6rem; }
+
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+.name-row label {
+  width: 4.5rem;
+  font-size: .85rem;
+  color: var(--text-muted);
+  text-align: right;
+  flex-shrink: 0;
+}
+.name-input {
+  flex: 1;
+  background: var(--bg);
+  border: 1.5px solid var(--surface2);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Courier New', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: .25em;
+  text-align: center;
+  text-transform: uppercase;
+  padding: .45rem .5rem;
+  transition: border-color .15s;
+}
+.name-input:focus { outline: none; border-color: var(--accent); }
+
+/* ── buttons ──────────────────────────────────────────────── */
+.btn-primary {
+  width: 100%;
+  padding: .9rem;
+  background: linear-gradient(135deg, var(--accent), #a06808);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0,0,0,.4);
+  transition: opacity .15s, transform .1s;
+}
+.btn-primary:hover  { opacity: .9; }
+.btn-primary:active { transform: scale(.97); }
+
+.btn-secondary {
+  flex: 1;
+  padding: .7rem;
+  background: var(--surface2);
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius);
+  color: var(--accent-lite);
+  font-family: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btn-secondary:hover { background: var(--accent); color: #fff; }
+
+.btn-row {
+  display: flex;
+  gap: .75rem;
+  width: 100%;
+}
+
+.hidden { display: none !important; }
+
+/* ── scoreboard ───────────────────────────────────────────── */
+#scoreboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: .6rem;
+  width: 100%;
+}
+
+.player-card {
+  background: var(--surface);
+  border: 1.5px solid var(--surface2);
+  border-radius: var(--radius);
+  padding: .65rem .4rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: border-color .2s;
+}
+.player-card.eliminated {
+  opacity: .45;
+  border-color: var(--red);
+}
+.player-name {
+  font-size: .75rem;
+  letter-spacing: .15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: .25rem;
+}
+.player-savings {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+.player-savings.bust { color: var(--red); }
+
+/* ── round form ───────────────────────────────────────────── */
+#round-label {
+  font-size: 1rem;
+  color: var(--accent-lite);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: .9rem;
+}
+
+.bill-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .6rem;
+}
+.bill-row label {
+  width: 3.5rem;
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--text);
+  text-align: right;
+  flex-shrink: 0;
+}
+.bill-input {
+  flex: 1;
+  background: var(--bg);
+  border: 1.5px solid var(--surface2);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: right;
+  padding: .4rem .7rem;
+  transition: border-color .15s;
+}
+.bill-input:focus { outline: none; border-color: var(--accent); }
+
+/* ── winner message ───────────────────────────────────────── */
+.winner-msg {
+  text-align: center;
+  font-size: 1.4rem;
+  color: var(--gold);
+  padding: 1rem 0;
+  line-height: 1.6;
+}
+.winner-msg span { font-size: .95rem; color: var(--text-muted); }
+
+/* ── history toggle ───────────────────────────────────────── */
+details { width: 100%; }
+summary {
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: .85rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .4rem 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+summary::-webkit-details-marker { display: none; }
+summary::before { content: '▶'; font-size: .65rem; transition: transform .2s; }
+details[open] summary::before { transform: rotate(90deg); }
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .8rem;
+  margin-top: .5rem;
+}
+.history-table th,
+.history-table td {
+  padding: .35rem .5rem;
+  border-bottom: 1px solid var(--surface2);
+  text-align: right;
+}
+.history-table th {
+  color: var(--accent-lite);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.history-table td:first-child,
+.history-table th:first-child { text-align: left; }
+
+/* ── responsive tweaks ────────────────────────────────────── */
+@media (max-width: 380px) {
+  .app-title    { font-size: 1.9rem; }
+  .count-grid   { grid-template-columns: repeat(3, 1fr); }
+  .count-btn    { padding: .55rem 0; }
+  .player-savings { font-size: .85rem; }
+}
+
+@media (min-width: 600px) {
+  .screen { padding: 2rem 1.5rem 5rem; }
+  .app-title { font-size: 2.9rem; }
+  #scoreboard { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+}

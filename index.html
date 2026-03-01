@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#c8860a" />
+  <meta name="description" content="Score tracker for the La Cuenta card game" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="La Cuenta" />
+
+  <title>La Cuenta – Scoring</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ════════════════ SETUP SCREEN ════════════════ -->
+  <section id="screen-setup" class="screen">
+
+    <header class="app-header">
+      <div class="app-title">🍽️ La Cuenta</div>
+      <div class="app-subtitle">The Bill · Score Tracker</div>
+    </header>
+
+    <!-- Player count -->
+    <div class="card">
+      <div class="card-title">Number of Players</div>
+      <div class="count-grid">
+        <button class="count-btn" data-count="3">
+          <span class="btn-count">3</span>
+          <span class="btn-saving">900 €</span>
+        </button>
+        <button class="count-btn" data-count="4">
+          <span class="btn-count">4</span>
+          <span class="btn-saving">1.000 €</span>
+        </button>
+        <button class="count-btn" data-count="5">
+          <span class="btn-count">5</span>
+          <span class="btn-saving">1.100 €</span>
+        </button>
+        <button class="count-btn" data-count="6">
+          <span class="btn-count">6</span>
+          <span class="btn-saving">1.200 €</span>
+        </button>
+        <button class="count-btn" data-count="7">
+          <span class="btn-count">7</span>
+          <span class="btn-saving">1.300 €</span>
+        </button>
+        <button class="count-btn" data-count="8">
+          <span class="btn-count">8</span>
+          <span class="btn-saving">1.400 €</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Player names -->
+    <div id="name-section" class="card hidden">
+      <div class="card-title">Player Names (3 letters)</div>
+      <div id="name-inputs"></div>
+    </div>
+
+    <button id="start-btn" class="btn-primary hidden">Start Game</button>
+
+  </section>
+
+  <!-- ════════════════ GAME SCREEN ════════════════ -->
+  <section id="screen-game" class="screen">
+
+    <header class="app-header">
+      <div class="app-title">🍽️ La Cuenta</div>
+    </header>
+
+    <!-- Scoreboard -->
+    <div id="scoreboard"></div>
+
+    <div class="divider">Bill this round</div>
+
+    <!-- Round entry -->
+    <div class="card">
+      <div id="round-label">Round 1</div>
+      <div id="round-form"></div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="btn-row">
+      <button id="undo-btn"       class="btn-secondary">↩ Undo</button>
+      <button id="submit-round"   class="btn-primary" style="flex:2">Submit Round</button>
+    </div>
+
+    <!-- History -->
+    <details>
+      <summary>Round History</summary>
+      <table class="history-table" id="history-table">
+        <thead><tr id="history-head"></tr></thead>
+        <tbody id="history-body"></tbody>
+      </table>
+    </details>
+
+    <button id="new-game-btn" class="btn-secondary" style="width:100%;margin-top:.5rem">
+      ＋ New Game
+    </button>
+
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
