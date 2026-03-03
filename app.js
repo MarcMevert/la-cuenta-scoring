@@ -265,16 +265,31 @@ function renderHistory() {
   const body = document.getElementById('history-body');
   if (!head || !body) return;
 
+  const formatHistoryAmount = amount => amount === 0 ? '·' : fmt(amount);
+
   head.innerHTML = '<th>Round</th>' +
     state.players.map(p => `<th>${p.name}</th>`).join('');
 
-  body.innerHTML = state.history.map(h => {
+  const totalsByPlayer = Object.fromEntries(state.players.map(p => [p.name, 0]));
+  state.history.forEach(h => {
+    h.bills.forEach(b => {
+      if (totalsByPlayer[b.name] !== undefined) totalsByPlayer[b.name] += b.amount;
+    });
+  });
+
+  const roundsRows = state.history.map(h => {
     const cells = state.players.map(p => {
       const bill = h.bills.find(b => b.name === p.name);
-      return `<td>${bill ? fmt(bill.amount) : '–'}</td>`;
+      return `<td>${bill ? formatHistoryAmount(bill.amount) : '–'}</td>`;
     }).join('');
     return `<tr><td>${h.round}</td>${cells}</tr>`;
   }).join('');
+
+  const totalsCells = state.players
+    .map(p => `<td>${formatHistoryAmount(totalsByPlayer[p.name])}</td>`)
+    .join('');
+
+  body.innerHTML = roundsRows + `<tr class="history-total"><td>Total</td>${totalsCells}</tr>`;
 }
 
 /* ── theme management ─────────────────────────────────────── */

@@ -447,36 +447,17 @@ body::before {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
-/* ── history toggle ───────────────────────────────────────── */
-details {
+/* ── history section ──────────────────────────────────────── */
+.history-section {
   width: 100%;
 }
 
-summary {
-  cursor: pointer;
+.history-title {
   color: var(--text-muted);
   font-size: .85rem;
   letter-spacing: .08em;
   text-transform: uppercase;
   padding: .4rem 0;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-}
-
-summary::-webkit-details-marker {
-  display: none;
-}
-
-summary::before {
-  content: '▶';
-  font-size: .65rem;
-  transition: transform .2s;
-}
-
-details[open] summary::before {
-  transform: rotate(90deg);
 }
 
 .history-table {
@@ -502,6 +483,13 @@ details[open] summary::before {
 .history-table td:first-child,
 .history-table th:first-child {
   text-align: left;
+}
+
+.history-table tr.history-total td {
+  border-top: 3px double var(--accent-lite);
+  border-bottom: none;
+  font-weight: 700;
+  color: var(--accent-lite);
 }
 
 /* ── responsive tweaks ────────────────────────────────────── */
