@@ -1,16 +1,16 @@
-name: CI Checks
+name: Playwright-Test
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  workflow_run:
+    workflows: ["CodeQL Advanced"]
+    types: [completed]
+    branches: [main, master]
 
 permissions:
   contents: read
-  security-events: write
 
 jobs:
   test:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/playwright:v1.58.2-jammy 
@@ -23,6 +23,18 @@ jobs:
       run: npm ci
     - name: Run Playwright tests
       run: npm run test:e2e
+    - name: Build Pages artifact
+      run: |
+        mkdir -p dist
+        cp index.html app.js style.css manifest.json sw.js dist/
+        if [ -d "icons" ]; then cp -r icons dist/icons; fi
+        if [ -d "docs" ]; then cp -r docs dist/docs; fi
+    - name: Upload site artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: site-dist
+        path: dist/
+        retention-days: 7
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
@@ -30,12 +42,3 @@ jobs:
         path: playwright-report/
         retention-days: 30
 
-  codeql:
-    name: CodeQL
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: github/codeql-action/init@v3
-      with:
-        languages: javascript-typescript
-    - uses: github/codeql-action/analyze@v3
