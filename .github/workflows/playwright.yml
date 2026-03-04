@@ -1,14 +1,19 @@
-name: Playwright Tests
+name: CI Checks
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:latest
+    container: mcr.microsoft.com/playwright:v1.58.2-jammy 
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -24,3 +29,13 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+  codeql:
+    name: CodeQL
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: github/codeql-action/init@v3
+      with:
+        languages: javascript-typescript
+    - uses: github/codeql-action/analyze@v3
