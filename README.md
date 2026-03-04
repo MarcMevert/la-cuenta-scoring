@@ -8,7 +8,7 @@ A mobile-friendly score tracker for the **La Cuenta** (*The Bill*) card game by 
 
 ## About the Game
 
-**La Cuenta** is a card game for **3–8 players** in which everyone starts the game with a modest savings account. Each round, fate deals out restaurant bills — and someone has to pay. Players who spend beyond their means go bankrupt and are eliminated. The last person still solvent wins!
+**La Cuenta** is a card game for **3–8 players** in which everyone starts the game with a modest savings account. Each round, fate deals out restaurant bills — and someone has to pay. The game ends immediately when any player runs out of savings, and the winner is the player with the most savings at that moment.
 
 | Players | Starting Savings |
 |--------:|-----------------|
@@ -19,7 +19,7 @@ A mobile-friendly score tracker for the **La Cuenta** (*The Bill*) card game by 
 | 7       | 1.300 €         |
 | 8       | 1.400 €         |
 
-Each round, enter the bill amount each active player must pay. Any player whose savings drop below zero is **eliminated**. Play continues until only one player remains — that player is the winner!
+Each round, enter the bill amount each player must pay. If any player reaches **0 or less**, the game ends immediately. The winner is the player with the highest remaining savings.
 
 > 🎲 Find the game on BoardGameGeek: [La Cuenta (BGG)](https://boardgamegeek.com/boardgame/437581/la-cuenta)
 
@@ -32,7 +32,7 @@ This is a **Progressive Web App (PWA)** that replaces pen-and-paper score tracki
 **Features:**
 - Enter 3–8 player names (up to 3 letters each)
 - Track savings after each round
-- Automatic elimination when savings go negative
+- Automatic game-over when any player reaches 0 or less
 - Round history table
 - Undo last round
 - Saves state to `localStorage` — resume a game after closing the browser

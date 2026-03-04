@@ -5,10 +5,14 @@ const STARTING_SAVINGS = { 3: 900, 4: 1000, 5: 1100, 6: 1200, 7: 1300, 8: 1400 }
 
 /* ── state ────────────────────────────────────────────────── */
 let state = {
-  players: [],   // [{ name, savings, eliminated }]
+  players: [],   // [{ name, savings }]
   round: 0,
   history: []    // [{ bills: [{ name, amount }] }]
 };
+
+function isGameOver() {
+  return state.players.some(p => p.savings <= 0);
+}
 
 /* ── helpers ──────────────────────────────────────────────── */
 function fmt(n) {
@@ -97,7 +101,7 @@ function initSetup() {
 function startGame(count, names) {
   const savings = STARTING_SAVINGS[count];
   state = {
-    players: names.map(name => ({ name, savings, eliminated: false })),
+    players: names.map(name => ({ name, savings })),
     round: 0,
     history: []
   };
@@ -118,7 +122,6 @@ function renderScoreboard() {
   state.players.forEach(p => {
     const card = document.createElement('div');
     card.classList.add('player-card');
-    if (p.eliminated) card.classList.add('eliminated');
 
     const bust = p.savings < 0;
 
@@ -138,7 +141,7 @@ function renderScoreboard() {
 }
 
 function renderRoundForm() {
-  const activePlayers = state.players.filter(p => !p.eliminated);
+  const activePlayers = state.players;
 
   const form = document.getElementById('round-form');
   form.innerHTML = '';
@@ -147,7 +150,7 @@ function renderRoundForm() {
   const roundLabel = document.getElementById('round-label');
   roundLabel.textContent = `Round ${state.round + 1}`;
 
-  if (activePlayers.length <= 1) {
+  if (isGameOver()) {
     renderWinner();
     return;
   }
@@ -201,11 +204,6 @@ function submitRound() {
     if (p) p.savings -= b.amount;
   });
 
-  // mark eliminated (savings < 0 = bust → eliminated)
-  state.players.forEach(p => {
-    if (!p.eliminated && p.savings < 0) p.eliminated = true;
-  });
-
   state.history.push({ round: state.round + 1, bills });
   state.round += 1;
   saveState();
@@ -219,8 +217,10 @@ function renderWinner() {
   const submitBtn = document.getElementById('submit-round');
   const undoBtn = document.getElementById('undo-btn');
 
-  const winners = state.players.filter(p => !p.eliminated);
-  const winner = winners[0];
+  const winner = state.players.reduce((best, p) => {
+    if (!best || p.savings > best.savings) return p;
+    return best;
+  }, null);
 
   roundLabel.textContent = 'Game Over';
   submitBtn.classList.add('hidden');
@@ -242,11 +242,6 @@ function undoRound() {
   last.bills.forEach(b => {
     const p = state.players.find(p => p.name === b.name);
     if (p) p.savings += b.amount;
-  });
-
-  // un-eliminate players whose savings are now >= 0
-  state.players.forEach(p => {
-    if (p.eliminated && p.savings >= 0) p.eliminated = false;
   });
 
   state.round -= 1;

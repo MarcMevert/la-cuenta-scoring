@@ -1,0 +1,31 @@
+{
+  "name": "la-cuenta-scoring",
+  "version": "1.0.0",
+  "description": "A mobile-friendly score tracker for the **La Cuenta** (*The Bill*) card game by [2 Tomatoes Games](https://2tomatoesgames.com).",
+  "homepage": "https://github.com/MarcMevert/la-cuenta-scoring#readme",
+  "bugs": {
+    "url": "https://github.com/MarcMevert/la-cuenta-scoring/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcMevert/la-cuenta-scoring.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.html",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "serve:test": "http-server . -p 4173 -c-1 --silent",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.3"
+  }
+}
