@@ -107,6 +107,7 @@ function startGame(count, names) {
   };
   saveState();
   renderGame();
+  renderHistory();
   showScreen('screen-game');
 }
 
