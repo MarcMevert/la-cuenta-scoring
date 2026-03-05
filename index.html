@@ -17,14 +17,23 @@
 
 <body>
 
-  <!-- ════════════════ THEME SELECTOR ════════════════ -->
-  <div class="theme-selector" id="theme-selector">
-    <div class="theme-btn active" data-theme="default" style="background: #c8860a;" title="Default"></div>
-    <div class="theme-btn" data-theme="green" style="background: #7fb347;" title="Green"></div>
-    <div class="theme-btn" data-theme="orange" style="background: #f0a31d;" title="Orange"></div>
-    <div class="theme-btn" data-theme="blue" style="background: #6fa1d2;" title="Blue"></div>
-    <div class="theme-btn" data-theme="turquoise" style="background: #00827b;" title="Turquoise"></div>
-    <div class="theme-btn" data-theme="fire" style="background: #d93616;" title="Fire"></div>
+  <!-- ════════════════ TOP BAR ════════════════ -->
+  <div class="top-bar">
+    <div class="theme-selector" id="theme-selector">
+      <div class="theme-btn active" data-theme="default" style="background: #c8860a;" title="Default"></div>
+      <div class="theme-btn" data-theme="green" style="background: #7fb347;" title="Green"></div>
+      <div class="theme-btn" data-theme="orange" style="background: #f0a31d;" title="Orange"></div>
+      <div class="theme-btn" data-theme="blue" style="background: #6fa1d2;" title="Blue"></div>
+      <div class="theme-btn" data-theme="turquoise" style="background: #00827b;" title="Turquoise"></div>
+      <div class="theme-btn" data-theme="fire" style="background: #d93616;" title="Fire"></div>
+    </div>
+    <div class="lang-selector" id="lang-selector">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="de">DE</button>
+      <button class="lang-btn" data-lang="ca">CA</button>
+      <button class="lang-btn" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+    </div>
   </div>
 
   <!-- ════════════════ SETUP SCREEN ════════════════ -->
@@ -32,12 +41,12 @@
 
     <header class="app-header">
       <div class="app-title">🍽️ La Cuenta</div>
-      <div class="app-subtitle">The Bill · Score Tracker</div>
+      <div class="app-subtitle" data-i18n="app.subtitle">The Bill · Score Tracker</div>
     </header>
 
     <!-- Player count -->
     <div class="card">
-      <div class="card-title">Number of Players</div>
+      <div class="card-title" data-i18n="setup.playerCount">Number of Players</div>
       <div class="count-grid">
         <button class="count-btn" data-count="3">
           <span class="btn-count">3</span>
@@ -68,46 +77,46 @@
 
     <!-- Player names -->
     <div id="name-section" class="card hidden">
-      <div class="card-title">Player Names (3 letters)</div>
+      <div class="card-title" data-i18n="setup.playerNames">Player Names (3 letters)</div>
       <div id="name-inputs"></div>
     </div>
 
-    <button id="start-btn" class="btn-primary hidden">Start Game</button>
+    <button id="start-btn" class="btn-primary hidden" data-i18n="setup.startGame">Start Game</button>
 
     <section class="faq-section" aria-label="Frequently Asked Questions">
-      <div class="card-title">FAQ · Frequently Asked Questions</div>
+      <div class="card-title" data-i18n="faq.title">FAQ · Frequently Asked Questions</div>
 
       <details class="faq-item">
-        <summary>Is this a game to play?</summary>
-        <p>
+        <summary data-i18n="faq.q1">Is this a game to play?</summary>
+        <p data-i18n-html="faq.a1">
           This is not the full game. It helps you keep score while you play <strong>La Cuenta</strong> with the real cards.
         </p>
       </details>
 
       <details class="faq-item">
-        <summary>Is it free to use?</summary>
-        <p>
+        <summary data-i18n="faq.q2">Is it free to use?</summary>
+        <p data-i18n-html="faq.a2">
           Yes, it is completely free.
         </p>
       </details>
 
       <details class="faq-item">
-        <summary>Is my data or scoring sent to someone?</summary>
-        <p>
+        <summary data-i18n="faq.q3">Is my data or scoring sent to someone?</summary>
+        <p data-i18n-html="faq.a3">
           No. Your scores stay on your own device and are not shared by this app.
         </p>
       </details>
 
       <details class="faq-item">
-        <summary>Can I use it offline without internet?</summary>
-        <p>
+        <summary data-i18n="faq.q4">Can I use it offline without internet?</summary>
+        <p data-i18n-html="faq.a4">
           Yes. Open it once with internet, then you can use it later without internet.
         </p>
       </details>
 
       <details class="faq-item">
-        <summary>Can I install this as an app?</summary>
-        <p>
+        <summary data-i18n="faq.q5">Can I install this as an app?</summary>
+        <p data-i18n-html="faq.a5">
           Yes. You can add it to your phone, tablet, or computer home screen and open it like a normal app.
         </p>
       </details>
@@ -125,7 +134,7 @@
     <!-- Scoreboard -->
     <div id="scoreboard"></div>
 
-    <div class="divider">Bill this round</div>
+    <div class="divider" data-i18n="game.billThisRound">Bill this round</div>
 
     <!-- Round entry -->
     <div class="card">
@@ -135,13 +144,13 @@
 
     <!-- Action buttons -->
     <div class="btn-row">
-      <button id="undo-btn" class="btn-secondary">↩ Undo</button>
-      <button id="submit-round" class="btn-primary" style="flex:2">Submit Round</button>
+      <button id="undo-btn" class="btn-secondary" data-i18n="game.undo">↩ Undo</button>
+      <button id="submit-round" class="btn-primary" style="flex:2" data-i18n="game.submitRound">Submit Round</button>
     </div>
 
     <!-- History -->
     <section class="history-section" aria-label="Round History">
-      <div class="history-title">Round History</div>
+      <div class="history-title" data-i18n="game.roundHistory">Round History</div>
       <table class="history-table" id="history-table">
         <thead>
           <tr id="history-head"></tr>
@@ -150,12 +159,13 @@
       </table>
     </section>
 
-    <button id="new-game-btn" class="btn-secondary" style="width:100%;margin-top:.5rem">
+    <button id="new-game-btn" class="btn-secondary" style="width:100%;margin-top:.5rem" data-i18n="game.newGame">
       ＋ New Game
     </button>
 
   </section>
 
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>
 

@@ -25,10 +25,10 @@ function sanitizeDigits(value) {
 
 function getBillValidationMessage(rawValue, maxAmount) {
   if (!rawValue) return '';
-  if (!/^\d+$/.test(rawValue)) return 'Only whole numbers';
+  if (!/^\d+$/.test(rawValue)) return t('validation.onlyWholeNumbers');
 
   const amount = Number(rawValue);
-  if (amount > maxAmount) return `Max ${fmt(maxAmount)}`;
+  if (amount > maxAmount) return t('validation.max', { amount: fmt(maxAmount) });
 
   return '';
 }
@@ -103,7 +103,7 @@ function initSetup() {
     nameInputs.innerHTML = '';
     for (let i = 1; i <= n; i++) {
       const label = document.createElement('label');
-      label.textContent = `Player ${i}`;
+      label.textContent = t('setup.playerLabel', { n: i });
       const input = document.createElement('input');
       input.type = 'text';
       input.maxLength = 3;
@@ -199,7 +199,7 @@ function renderRoundForm() {
 
   // round label
   const roundLabel = document.getElementById('round-label');
-  roundLabel.textContent = `Round ${state.round + 1}`;
+  roundLabel.textContent = t('game.round', { n: state.round + 1 });
 
   if (isGameOver()) {
     renderWinner();
@@ -316,13 +316,13 @@ function renderWinner() {
     return best;
   }, null);
 
-  roundLabel.textContent = 'Game Over';
+  roundLabel.textContent = t('game.gameOver');
   submitBtn.classList.add('hidden');
   undoBtn.classList.add('hidden');
 
   const msg = document.createElement('div');
   msg.classList.add('winner-msg');
-  msg.innerHTML = `🏆 <strong>${winner ? winner.name : '?'}</strong> wins!<br><span>${winner ? fmt(winner.savings) : ''} remaining</span>`;
+  msg.innerHTML = t('game.winnerMsg', { name: winner ? winner.name : '?' }) + '<br><span>' + t('game.remaining', { amount: winner ? fmt(winner.savings) : '' }) + '</span>';
   form.appendChild(msg);
 }
 
@@ -356,7 +356,7 @@ function renderHistory() {
 
   const formatHistoryAmount = amount => amount === 0 ? '·' : fmt(amount);
 
-  head.innerHTML = '<th>Round</th>' +
+  head.innerHTML = '<th>' + t('game.historyRound') + '</th>' +
     state.players.map(p => `<th>${p.name}</th>`).join('');
 
   const totalsByPlayer = Object.fromEntries(state.players.map(p => [p.name, 0]));
@@ -378,7 +378,7 @@ function renderHistory() {
     .map(p => `<td>${formatHistoryAmount(totalsByPlayer[p.name])}</td>`)
     .join('');
 
-  body.innerHTML = roundsRows + `<tr class="history-total"><td>Total</td>${totalsCells}</tr>`;
+  body.innerHTML = roundsRows + `<tr class="history-total"><td>${t('game.historyTotal')}</td>${totalsCells}</tr>`;
 }
 
 /* ── theme management ─────────────────────────────────────── */
@@ -419,6 +419,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadState();
   initTheme();
+  initI18n();
+
+  // callback for language changes – re-render dynamic content
+  window.onLanguageChange = () => {
+    if (state.players.length > 0) {
+      renderGame();
+      renderHistory();
+    }
+  };
 
   initSetup();
 
