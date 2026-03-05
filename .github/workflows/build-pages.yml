@@ -1,0 +1,29 @@
+name: Build-Pages
+on:
+  workflow_run:
+    workflows: ["Playwright-Test"]
+    types: [completed]
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Pages artifact
+      run: |
+        mkdir -p dist
+        cp index.html app.js style.css i18n.js sw.js dist/
+        cp manifest.json manifest.*.json dist/
+        if [ -d "icons" ]; then cp -r icons dist/icons; fi
+        if [ -d "docs" ]; then cp -r docs dist/docs; fi
+    - name: Upload site artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: site-dist
+        path: dist/
+        retention-days: 7

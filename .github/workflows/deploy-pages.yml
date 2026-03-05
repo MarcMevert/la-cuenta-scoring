@@ -1,7 +1,7 @@
 name: Deploy GitHub Pages
 on:
   workflow_run:
-    workflows: ["Playwright-Test"]
+    workflows: ["Build-Pages"]
     types: [completed]
     branches: [main, master]
 
@@ -21,7 +21,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
     - uses: actions/configure-pages@v5
-    - name: Download site artifact from Playwright run
+    - name: Download site artifact from Build-Pages run
       uses: actions/download-artifact@v4
       with:
         name: site-dist
