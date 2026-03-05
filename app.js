@@ -19,6 +19,27 @@ function fmt(n) {
   return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
 }
 
+function sanitizeDigits(value) {
+  return String(value || '').replace(/\D/g, '');
+}
+
+function getBillValidationMessage(rawValue, maxAmount) {
+  if (!rawValue) return '';
+  if (!/^\d+$/.test(rawValue)) return 'Only whole numbers';
+
+  const amount = Number(rawValue);
+  if (amount > maxAmount) return `Max ${fmt(maxAmount)}`;
+
+  return '';
+}
+
+function setBillValidationState(input, errorEl, message) {
+  const hasError = Boolean(message);
+  input.classList.toggle('invalid', hasError);
+  errorEl.textContent = hasError ? message : '';
+  errorEl.classList.toggle('active', hasError);
+}
+
 function saveState() {
   localStorage.setItem('lacuenta', JSON.stringify(state));
 }
@@ -193,13 +214,37 @@ function renderRoundForm() {
     label.textContent = p.name;
 
     const input = document.createElement('input');
-    input.type = 'number';
-    input.min = '0';
-    input.step = '1';
+    input.type = 'text';
+    input.inputMode = 'numeric';
+    input.pattern = '[0-9]*';
+    input.autocomplete = 'off';
     input.placeholder = '0';
     input.dataset.player = p.name;
+    input.dataset.max = String(Math.max(0, p.savings));
     input.classList.add('bill-input');
+    const errorEl = document.createElement('div');
+    errorEl.classList.add('bill-error');
+
+    input.addEventListener('beforeinput', e => {
+      if (!e.data) return;
+      if (/\D/.test(e.data)) e.preventDefault();
+    });
+
+    input.addEventListener('input', () => {
+      const sanitized = sanitizeDigits(input.value);
+      if (input.value !== sanitized) input.value = sanitized;
+
+      const maxAmount = parseInt(input.dataset.max, 10) || 0;
+      const message = getBillValidationMessage(input.value, maxAmount);
+      setBillValidationState(input, errorEl, message);
+    });
+
     input.addEventListener('keydown', e => {
+      if (['e', 'E', '+', '-', '.', ','].includes(e.key)) {
+        e.preventDefault();
+        return;
+      }
+
       if (e.key === 'Enter') {
         const inputs = form.querySelectorAll('.bill-input');
         const idx = Array.from(inputs).indexOf(input);
@@ -208,8 +253,18 @@ function renderRoundForm() {
       }
     });
 
+    input.addEventListener('paste', e => {
+      const text = (e.clipboardData || window.clipboardData).getData('text');
+      if (/\D/.test(text)) e.preventDefault();
+    });
+
+    const field = document.createElement('div');
+    field.classList.add('bill-field');
+    field.appendChild(input);
+    field.appendChild(errorEl);
+
     row.appendChild(label);
-    row.appendChild(input);
+    row.appendChild(field);
     form.appendChild(row);
   });
 
@@ -221,12 +276,21 @@ function renderRoundForm() {
 function submitRound() {
   const inputs = document.querySelectorAll('.bill-input');
   const bills = [];
+  let hasValidationErrors = false;
 
   inputs.forEach(inp => {
+    const maxAmount = parseInt(inp.dataset.max, 10) || 0;
+    const errorEl = inp.parentElement ? inp.parentElement.querySelector('.bill-error') : null;
+    const message = getBillValidationMessage(inp.value, maxAmount);
+    if (errorEl) setBillValidationState(inp, errorEl, message);
+    if (message) hasValidationErrors = true;
+
     const name = inp.dataset.player;
     const amount = parseInt(inp.value, 10) || 0;
     bills.push({ name, amount });
   });
+
+  if (hasValidationErrors) return;
 
   // apply bills
   bills.forEach(b => {

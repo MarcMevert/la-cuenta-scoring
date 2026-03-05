@@ -433,7 +433,7 @@ body::before {
 
 .bill-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: .75rem;
   margin-bottom: .6rem;
 }
@@ -449,7 +449,6 @@ body::before {
 }
 
 .bill-input {
-  flex: 1;
   background: var(--bg);
   border: 1.5px solid var(--surface2);
   border-radius: 8px;
@@ -465,6 +464,30 @@ body::before {
 .bill-input:focus {
   outline: none;
   border-color: var(--accent);
+}
+
+.bill-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.bill-input.invalid {
+  border-color: var(--red);
+}
+
+.bill-error {
+  min-height: 1em;
+  font-size: .7rem;
+  color: var(--red);
+  text-align: right;
+  letter-spacing: .04em;
+  opacity: 0;
+}
+
+.bill-error.active {
+  opacity: 1;
 }
 
 /* ── winner message ───────────────────────────────────────── */

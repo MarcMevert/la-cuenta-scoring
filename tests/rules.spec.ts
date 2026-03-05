@@ -29,3 +29,32 @@ test('ends immediately when someone reaches zero and picks highest savings winne
   await expect(page.locator('.winner-msg')).toContainText('790');
   await expect(page.locator('.bill-input')).toHaveCount(0);
 });
+
+test('shows winner display in game over state with remaining savings', async ({ page }) => {
+  await page.goto('/');
+
+  await page.locator('.count-btn[data-count="3"]').click();
+
+  const nameInputs = page.locator('.name-input');
+  await nameInputs.nth(0).fill('AAA');
+  await nameInputs.nth(1).fill('BBB');
+  await nameInputs.nth(2).fill('CCC');
+
+  await page.locator('#start-btn').click();
+
+  // One player busts this round, while BBB keeps the highest remaining savings.
+  await page.locator('.bill-input[data-player="AAA"]').fill('900');
+  await page.locator('.bill-input[data-player="BBB"]').fill('100');
+  await page.locator('.bill-input[data-player="CCC"]').fill('200');
+  await page.locator('#submit-round').click();
+
+  await expect(page.locator('#round-label')).toHaveText('Game Over');
+  await expect(page.locator('#submit-round')).toHaveClass(/hidden/);
+  await expect(page.locator('#undo-btn')).toHaveClass(/hidden/);
+
+  const winnerMsg = page.locator('#round-form .winner-msg');
+  await expect(winnerMsg).toContainText('BBB');
+  await expect(winnerMsg).toContainText('wins!');
+  await expect(winnerMsg).toContainText('remaining');
+  await expect(winnerMsg).toContainText('800');
+});
