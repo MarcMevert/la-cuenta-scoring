@@ -504,13 +504,22 @@ body::before {
   color: var(--text-muted);
 }
 
+/* ── top bar (theme + language) ────────────────────────────── */
+.top-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 1rem;
+  z-index: 100;
+  flex-wrap: wrap;
+}
+
 /* ── theme selector ───────────────────────────────────────── */
 .theme-selector {
   display: flex;
   justify-content: center;
   gap: 0.8rem;
-  margin-top: 1rem;
-  z-index: 100;
 }
 
 .theme-btn {
@@ -531,6 +540,38 @@ body::before {
   border-color: var(--text);
   transform: scale(1.2);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ── language selector ────────────────────────────────────── */
+.lang-selector {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.lang-btn {
+  background: var(--surface2);
+  border: 1.5px solid transparent;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.35rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.lang-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.lang-btn.active {
+  border-color: var(--text);
+  background: var(--accent);
+  color: #fff;
 }
 
 /* ── history section ──────────────────────────────────────── */

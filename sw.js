@@ -1,10 +1,15 @@
-const CACHE = 'la-cuenta-v2';
+const CACHE = 'la-cuenta-v3';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
+  './i18n.js',
   './app.js',
   './manifest.json',
+  './manifest.de.json',
+  './manifest.ca.json',
+  './manifest.es.json',
+  './manifest.fr.json',
   './icons/icon-192.svg',
   './icons/icon-512.svg'
 ];
