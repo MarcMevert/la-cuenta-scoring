@@ -30,6 +30,29 @@ function loadState() {
   } catch (_) { /* ignore */ }
 }
 
+async function ensureLatestAppVersion() {
+  if (!('serviceWorker' in navigator)) return false;
+
+  try {
+    const reg = await navigator.serviceWorker.getRegistration();
+    if (!reg) return false;
+
+    await reg.update();
+
+    if (!reg.waiting) return false;
+
+    const activated = new Promise(resolve => {
+      navigator.serviceWorker.addEventListener('controllerchange', () => resolve(true), { once: true });
+    });
+
+    reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+    await activated;
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
 /* ── screens ──────────────────────────────────────────────── */
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -86,7 +109,13 @@ function initSetup() {
     startBtn.classList.remove('hidden');
   }
 
-  startBtn.addEventListener('click', () => {
+  startBtn.addEventListener('click', async () => {
+    const didUpdate = await ensureLatestAppVersion();
+    if (didUpdate) {
+      location.reload();
+      return;
+    }
+
     if (!selectedCount) return;
     const inputs = nameInputs.querySelectorAll('.name-input');
     const players = Array.from(inputs).map((inp, i) => {
@@ -331,7 +360,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('submit-round').addEventListener('click', submitRound);
   document.getElementById('undo-btn').addEventListener('click', undoRound);
-  document.getElementById('new-game-btn').addEventListener('click', newGame);
+  document.getElementById('new-game-btn').addEventListener('click', async () => {
+    const didUpdate = await ensureLatestAppVersion();
+    if (didUpdate) {
+      location.reload();
+      return;
+    }
+    newGame();
+  });
 
   // resume saved game if exists
   if (state.players.length > 0) {
