@@ -2,6 +2,8 @@
 
 A mobile-friendly score tracker for the **La Cuenta** (*The Bill*) card game by [2 Tomatoes Games](https://2tomatoesgames.com).
 
+Start the app here: https://marcmevert.github.io/la-cuenta-scoring/
+
 > **Note:** This is a scoring app only. You need the original physical card game to play — this app does not replace it.
 
 ---

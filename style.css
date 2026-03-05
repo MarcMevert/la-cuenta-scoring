@@ -317,6 +317,69 @@ body::before {
   display: none !important;
 }
 
+/* ── faq section ─────────────────────────────────────────── */
+.faq-section {
+  width: 100%;
+  background: var(--surface);
+  border: 1.5px solid var(--surface2);
+  border-radius: var(--radius);
+  padding: .9rem;
+}
+
+.faq-section .card-title {
+  margin-bottom: .5rem;
+}
+
+.faq-item {
+  border-top: 1px solid var(--surface2);
+  padding: .5rem 0;
+}
+
+.faq-item:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  font-weight: 700;
+  color: var(--accent-lite);
+  padding-right: 1.25rem;
+  position: relative;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: var(--gold);
+  transition: transform .2s ease;
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item p {
+  margin-top: .45rem;
+  color: var(--text);
+  font-size: .92rem;
+  line-height: 1.45;
+}
+
+.faq-item code {
+  background: var(--bg);
+  border: 1px solid var(--surface2);
+  border-radius: 4px;
+  padding: 0 .25rem;
+}
+
 /* ── scoreboard ───────────────────────────────────────────── */
 #scoreboard {
   display: grid;
